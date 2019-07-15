@@ -1,0 +1,544 @@
+[Main]
+Title=Portable Finder CMD
+Type=Plugin
+Author=laddanator
+Description=Batch from laddanator to get your personal Portable tasks (Flexibilty with editing batch the way you like...). For use with other media than the boot one where the option already exists with %CDDrive% :)
+Credits=Lancelot, ChrisR, http://TheOven.org
+Version=022
+Download_Level=1
+Level=5
+Selected=False
+Mandatory=False
+NoWarning=False
+Contact=http://TheOven.org/index.php?topic=370
+Date=2018.11.18
+Depend=
+Disable=
+Web1=http://gena.cwcodes.net/Projects/Gena/Apps/System%20Tools/Portable%20Finder%20CMD.script
+Web2=http://yomi.cwcodes.net/Yomi/AppY/System%20Tools/Portable%20Finder%20CMD.script
+CertifiedBy=
+Certification=
+HistoryNotes01=For maximum customization - Rename Portable Finder CMD to Portable Finder CMD_YourName and put it at Projects\MyPlugins\AppsMy\System Tools
+HistoryNotes02=BroadcastEnvChange.exe Latest version and codes available at Gena\Basic\'EnvironmentPE'
+HistoryNotes03=Related Reply 3 http://TheOven.org/index.php?topic=364
+HistoryNotes04=laddanator: cardreader workaround used Reply 21 http://TheOven.org/index.php?topic=368.msg6086#msg6086
+HistoryNotes04=See also Portable Finder Startup http://TheOven.org/index.php?topic=1891.0
+History001=Lancelot 2012.11.05 Plugin created
+History003=Lancelot - Added Magic ;) 'Save Personal' button
+History005=ChrisR - Added %CDDrive% textlabel info - Small adjustment in Line 49 - reply3 http://TheOven.org/index.php?topic=370
+History006=ChrisR - Added Remove Personal Plugin+Link or Link
+History007=Lancelot Startup mechanism use Add_Shortcut,Autorun to ease compatibilities :>
+History007a=Lancelot Now we have hide optional (that would ease tests ;))
+History007b=Lancelot Batch file + ProgramTitle name taken from plugin-[Main]-Title to ease using multiple custom plugins when/if required
+History008=Lancelot added cd /d %~dp0
+History009=Lancelot added Reg.exe :>
+History009a=Lancelot Added CDDrive Variable anshad http://TheOven.org/index.php?topic=468
+History011=Lancelot fixed nohide shortcut option anshad reply 10 http://TheOven.org/index.php?topic=468.msg7891#msg7891
+History012=Lancelot MyPlugins adjusted
+History014=Lancelot Added ::Debug // Fixed unselecting Hide option http://TheOven.org/index.php?topic=1453.0 // Added DU buttons
+History015=Lancelot Added NirCMD_CheckBox // Improved [Dub_Personal] etc. - Date:2016.01.11
+History016=Lancelot Improved Duplicate Personal button. - Date:2016.02.14
+History017=Lancelot Added TheOven_Dynamic.cmd Default after http://TheOven.org/index.php?topic=1892 - Date:2016.09.29
+History018=Lancelot Changed TheOven_Dynamic.cmd --> TheOven_Startup.cmd - Disabled as default (back to v16 default settings) // Added nircmd.exe wait 20000 line -> wait 20 seconds to be sure all drives ready - Date:2016.09.30
+History019=Lancelot Update hiderun lines // nircmd lines - Date:2017.09.23
+History020=Lancelot Add To Yomi Server - Date:2018.10.23
+History021=Lancelot Updated BoradcastEnvChange.exe following Galapo Reply 28 - 35 http://TheOven.org/index.php?topic=2278.msg29092#msg29092 http://TheOven.org/index.php?topic=2278.msg29103#msg29103 - Date:2018.11.12
+History022=Lancelot Add Require,File,BroadcastEnvChange.exe - Date:2018.11.18
+
+[InterFace]
+Edit_Button=Edit,1,8,8,130,30,25,Edit_Process,,False,_Edit_Process_,False
+Edit_TextFile=Steps.txt,1,6,12,161,508,157
+Info_Cmd_TextLabel="Requires: Basic .cmd (Batch) knowledge",1,1,3,7,230,18,8,Bold
+Info_CDR_TextLabel="For use with other media than the boot one where the option already exists with %CDDrive% :)",1,1,9,23,268,29,8,Normal
+Info_MGo_TextLabel="Main Goal: To run your portable tasks on your USB easly#$x#$xAlso Check:#$xnircmd.exe (Shortcut Creation) xcopy.exe etc....#$xfor further tasks of your portable app goals#$x#$xClick 'Edit' button to modify PortableFinder.cmd easly",1,1,44,56,271,94,8,Normal
+Dub_Bevel=Dub_Bevel,1,12,321,33,119,75
+Dub_Button="Save Personal",1,8,325,35,110,25,Dub_Personal,,False,_Dub_Personal_,False
+Dub_TextBox=Author:,1,0,326,80,108,21,
+pWebLabel1="Plugin Page",1,10,416,-1,55,18,http://TheOven.org/index.php?topic=370
+pWebLabel2=Nircmd,1,10,379,14,32,18,http://www.nirsoft.net/utils/nircmd.html
+pWebLabel3="Nircmd Ref",1,10,418,14,52,18,http://nircmd.nirsoft.net/sysrefresh.html
+Remove_Bevel=Remove_Bevel,0,12,321,107,119,40
+Plus_Button=+,1,8,423,107,18,18,PlusGui,False,True,False,_PlusGui_,True
+Minus_Button=-,0,8,423,107,18,18,MinusGui,False,True,False,_MinusGui_,True
+Remove_Label="Remove Personal:",0,1,326,109,95,18,8,Normal
+RemoveAll_Button=Plugin+Link,0,8,326,124,65,18,RemoveAll_Process,,False,_RemoveAll_Process_,False
+RemoveLink_Button=Link,0,8,393,124,30,18,RemoveLink_Process,,False,_RemoveLink_Process_,False
+HideCMD_CheckBox="Hide Cmd window Boot",1,3,276,-2,131,18,True
+Button_Download=,1,8,478,21,24,24,DownloadXXX,DoubleJDesignRavenna3dArrowDown0016016.bmp,False,False,_DownloadXXX_,False,"__DOWNLOAD Plugin"
+Button_Upload=,1,8,478,-1,24,24,UploadXXX,BokehliciaCaptivaSoftwareupload0016016.bmp,False,False,_UploadXXX_,False,"__UPLOAD Plugin (Admins Only)"
+Button_CompareEdit=,1,8,500,-1,24,24,CompareEditXXX,AmperossQetto2Move0016016.bmp,False,False,_CompareEditXXX_,False,"__DOWNLOAD and Compare with an Editor"
+NirCMD_CheckBox="Add nircmd.exe",1,3,276,14,102,18,True
+
+[PlusGui]
+System,CURSOR,Wait
+Visible,%Remove_Bevel%,True,PERMANENT
+Visible,%Plus_Button%,False,PERMANENT
+Visible,%Minus_Button%,True,PERMANENT
+Visible,%Remove_Label%,True,PERMANENT
+Visible,%RemoveAll_Button%,True,PERMANENT
+Visible,%RemoveLink_Button%,True,PERMANENT
+System,RefreshInterface
+System,CURSOR,Normal
+
+[MinusGui]
+System,CURSOR,Wait
+Visible,%Remove_Bevel%,False,PERMANENT
+Visible,%Plus_Button%,True,PERMANENT
+Visible,%Minus_Button%,False,PERMANENT
+Visible,%Remove_Label%,False,PERMANENT
+Visible,%RemoveAll_Button%,False,PERMANENT
+Visible,%RemoveLink_Button%,False,PERMANENT
+System,RefreshInterface
+System,CURSOR,Normal
+
+[RemoveAll_Process]
+Set,%rall%,1
+Run,%ScriptFile%,RemoveLink_Process
+//Set,%Tar%,"%BaseDir%\Projects\MyPlugins\AppsMy\System Tools\%NFNWOext%.Script"
+//--
+Set,%t%,%ScriptFile%
+StrFormat,Replace,%t%,%ScriptDir%,"",%t%
+StrFormat,Ctrim,%t%,\,%t%
+StrFormat,RTrim,%t%,7,%FNWOext%
+//--
+Set,%t%,%ScriptDir%
+StrFormat,CTRIM,%t%,\,%t%
+StrFormat,Replace,%t%,%BaseDir%\Projects\,"",%t%
+StrFormat,Split,%t%,\,1,%t2%
+StrFormat,Replace,%t%,%t2%,"",%SubFolder%
+StrFormat,CTRIM,%SubFolder%,\,%SubFolder%
+Set,%SubFolder%,\%SubFolder%
+Set,%SubFolderTarget%,%SubFolder%
+//--
+//StrFormat,Split,%SubFolder%,\,0,%SubFoldersNo%
+StrFormat,Split,%SubFolder%,\,2,%SubFolderBase%
+//--
+//Path intentionally hardcoded with My ;)
+If,Not,%SubFolderBase%-,Equal,-,Begin
+StrFormat,Right,%SubFolderBase%,2,%t%
+If,Not,%t%,Equal,My,StrFormat,Replace,%SubFolderTarget%,%SubFolderBase%,%SubFolderBase%My,%SubFolderTarget%
+End
+Set,%TarFolder%,%BaseDir%\Projects\MyPlugins%SubFolderTarget%
+//--
+If,Not,ExistDir,%TarFolder%,DirMake,%TarFolder%
+//-
+Set,%Auth%,%Dub_TextBox%
+If,%Auth%-,Equal,-,Begin
+//-
+Set,%t%,""
+If,ExistFile,%GlobalTemplates%\Download_1Upload\9_Info.ini,IniRead,%GlobalTemplates%\Download_1Upload\9_Info.ini,Info,Author,%t%
+If,Not,%t%,Equal,"",Set,%Auth%,%t%
+//-
+If,%Auth%-,Equal,-,Begin
+Set,%Auth%,My
+Call,HostUserName
+Set,%t%,1
+If,%HostUserName%,Equal,Administrator,Set,%t%,0
+If,%HostUserName%,Equal,Guest,Set,%t%,0
+If,%HostUserName%,Equal,System,Set,%t%,0
+If,%t%,Equal,1,Set,%Auth%,%HostUserName%
+End
+End
+//-
+Set,%NFNWOext%,%FNWOext%_%Auth%
+//--
+Set,%TaL%,"%TarFolder%\%NFNWOext%.Link"
+If,ExistFile,%TaL%,Shellexecute,Hide,cmd.exe,"/C del /q /f #$q%TaL%#$q&del /q /f /A:R /A:H /A:S /A:A #$q%TaL%#$q"
+//--
+Set,%Tar%,"%TarFolder%\%NFNWOext%.Script"
+//--
+If,ExistFile,%Tar%,Shellexecute,Hide,cmd.exe,"/C del /q /f #$q%Tar%#$q&del /q /f /A:R /A:H /A:S /A:A #$q%Tar%#$q"
+If,ExistFile,%Tar%,Message,"Personal Plugin not deleted",Error
+If,ExistFile,%Tar%,Exit,"Personal Plugin not deleted"
+If,%rf%,Equal,1,System,ReScanScripts
+
+[RemoveLink_Process]
+Set,%t%,%ScriptFile%
+StrFormat,Replace,%t%,%ScriptDir%,"",%t%
+StrFormat,Ctrim,%t%,\,%t%
+StrFormat,RTrim,%t%,7,%FNWOext%
+Set,%Auth%,%Dub_TextBox%
+If,%Auth%-,Equal,-,Begin
+//-
+Set,%t%,""
+If,ExistFile,%GlobalTemplates%\Download_1Upload\9_Info.ini,IniRead,%GlobalTemplates%\Download_1Upload\9_Info.ini,Info,Author,%t%
+If,Not,%t%,Equal,"",Set,%Auth%,%t%
+//-
+If,%Auth%-,Equal,-,Begin
+Set,%Auth%,My
+Call,HostUserName
+Set,%t%,1
+If,%HostUserName%,Equal,Administrator,Set,%t%,0
+If,%HostUserName%,Equal,Guest,Set,%t%,0
+If,%HostUserName%,Equal,System,Set,%t%,0
+If,%t%,Equal,1,Set,%Auth%,%HostUserName%
+End
+End
+Set,%NFNWOext%,%FNWOext%_%Auth%
+Set,%Link%,%ScriptDir%\%NFNWOext%.Link
+Set,%rf%,0
+If,ExistFile,%Link%,Set,%rf%,1
+If,ExistFile,%Link%,Shellexecute,Hide,cmd.exe,"/C del /q /f #$q%w%#$q&del /q /f /A:R /A:H /A:S /A:A #$q%Link%#$q"
+If,ExistFile,%Link%,Message,"Link not deleted",Error
+If,ExistFile,%Link%,Exit,"Link not deleted"
+If,%rf%%rall%,Equal,10,System,ReScanScripts
+
+[Dub_Personal]
+Set,%t%,%ScriptFile%
+StrFormat,Replace,%t%,%ScriptDir%,"",%t%
+StrFormat,Ctrim,%t%,\,%t%
+StrFormat,RTrim,%t%,7,%FNWOext%
+//--
+Set,%t%,%ScriptDir%
+StrFormat,CTRIM,%t%,\,%t%
+StrFormat,Replace,%t%,%BaseDir%\Projects\,"",%t%
+StrFormat,Split,%t%,\,1,%t2%
+StrFormat,Replace,%t%,%t2%,"",%SubFolder%
+StrFormat,CTRIM,%SubFolder%,\,%SubFolder%
+Set,%SubFolder%,\%SubFolder%
+Set,%SubFolderTarget%,%SubFolder%
+//--
+//StrFormat,Split,%SubFolder%,\,0,%SubFoldersNo%
+StrFormat,Split,%SubFolder%,\,2,%SubFolderBase%
+//--
+//Path intentionally hardcoded with My ;)
+If,Not,%SubFolderBase%-,Equal,-,Begin
+StrFormat,Right,%SubFolderBase%,2,%t%
+If,Not,%t%,Equal,My,StrFormat,Replace,%SubFolderTarget%,%SubFolderBase%,%SubFolderBase%My,%SubFolderTarget%
+End
+Set,%TarFolder%,%BaseDir%\Projects\MyPlugins%SubFolderTarget%
+//--
+If,Not,ExistDir,%TarFolder%,DirMake,%TarFolder%
+//-
+Set,%Auth%,%Dub_TextBox%
+If,%Auth%-,Equal,-,Begin
+//-
+Set,%t%,""
+If,ExistFile,%GlobalTemplates%\Download_1Upload\9_Info.ini,IniRead,%GlobalTemplates%\Download_1Upload\9_Info.ini,Info,Author,%t%
+If,Not,%t%,Equal,"",Set,%Auth%,%t%
+//-
+If,%Auth%-,Equal,-,Begin
+Set,%Auth%,My
+Call,HostUserName
+Set,%t%,1
+If,%HostUserName%,Equal,Administrator,Set,%t%,0
+If,%HostUserName%,Equal,Guest,Set,%t%,0
+If,%HostUserName%,Equal,System,Set,%t%,0
+If,%t%,Equal,1,Set,%Auth%,%HostUserName%
+End
+End
+//-
+Set,%NFNWOext%,%FNWOext%_%Auth%
+//-
+Set,%rf%,1
+Set,%t1%,0
+Set,%t2%,0
+If,ExistFile,%ScriptDir%\%NFNWOext%.Link,Set,%t1%,1
+If,ExistFile,%TarFolder%\%NFNWOext%.Script,Set,%t2%,1
+If,%t1%%t2%,Equal,11,Set,%rf%,0
+//-
+Set,%Tar%,"%TarFolder%\%NFNWOext%.Script"
+//-
+Set,%Fcreate%,1
+If,ExistFile,%Tar%,Begin
+If,Question,"%Tar%#$x#$xExists#$x#$x#$xDo you want to overwrite ?#$x",Set,%answer%,Yes
+If,Not,%answer%,Equal,Yes,Begin
+Set,%Fcreate%,0
+End
+End
+If,%Fcreate%,Equal,0,Call,Echo,"Plugin do not overwrite - Nothing copied - Plugin Exiting now.",Warn,,Message,,Exit
+//-
+Echo,%SubFolder%
+Echo,%SubFolderTarget%
+Echo,%FNWOext%
+Echo,%TarFolder%
+Echo,%Auth%
+Echo,%NFNWOext%
+Echo,%rf%
+Echo,%Tar%
+//-----
+If,%Fcreate%,Equal,1,Begin
+If,ExistFile,%Tar%,Begin
+If,Not,ExistDir,%ProjectTemp%,DirMake,%ProjectTemp%
+StrFormat,DATE,%myDate%,yyyymmddhhnnss
+CopyOrExpand,%Tar%,%ProjectTemp%\%NFNWOext%_%myDate%.Script
+Call,Echo,"Old Plugin Backup at #$x %ProjectTemp%\%NFNWOext%_%myDate%.Script",Warn,,MessageInformation
+End
+//--
+CopyOrExpand,%ScriptFile%,%Tar%
+IniWrite,%Tar%,Main,Selected,True
+StrFormat,Date,%MyDate%,yyyy.mm.dd
+IniWrite,%Tar%,Main,Date,%MyDate%
+IniRead,%ScriptFile%,Main,Author,%t%
+If,Not,%t%,Equal,%Auth%,IniWrite,%Tar%,Main,Author,"%t%#$c %Auth%"
+IniRead,%ScriptFile%,Main,Title,%t%
+IniWrite,%Tar%,Main,Title,"%t% %Auth%"
+IniDelete,%Tar%,Interface,Dub_Bevel
+IniDelete,%Tar%,Interface,Dub_Button
+IniDelete,%Tar%,Interface,Dub_TextBox
+IniDeleteSection,%Tar%,Dub_Personal
+IniDeleteSection,%Tar%,Dub_Personal_HistoryDelete_Loop
+IniDeleteSection,%Tar%,Dub_Personal_HistoryNotesDelete_Loop
+IniDelete,%Tar%,Interface,Button_Download
+IniDelete,%Tar%,Interface,Button_Upload
+IniDelete,%Tar%,Interface,Button_CompareEdit
+IniDelete,%Tar%,Main,Web1
+IniDelete,%Tar%,Main,Web2
+IniDelete,%Tar%,InterfaceEncoded,DoubleJDesignRavenna3dArrowDown0016016.bmp
+IniDelete,%Tar%,InterfaceEncoded,BokehliciaCaptivaSoftwareupload0016016.bmp
+IniDeleteSection,%Tar%,EncodedFile-InterfaceEncoded-DoubleJDesignRavenna3dArrowDown0016016.bmp
+IniDeleteSection,%Tar%,EncodedFile-InterfaceEncoded-BokehliciaCaptivaSoftwareupload0016016.bmp
+IniDeleteSection,%Tar%,DownloadXXX
+IniDeleteSection,%Tar%,UploadXXX
+IniDeleteSection,%Tar%,Upload_Default
+IniDeleteSection,%Tar%,Upload_Default_SE
+IniDeleteSection,%Tar%,Upload_Default_Gena
+IniDeleteSection,%Tar%,Upload_Default_Yomi
+IniDeleteSection,%Tar%,Upload_Default_Win10PESE
+IniDeleteSection,%Tar%,Upload_Default_Win8.1SE
+IniDeleteSection,%Tar%,Upload_Default_Win8PESE
+IniDeleteSection,%Tar%,Upload_Default_Win7PESE
+IniDeleteSection,%Tar%,Settings_Default
+IniDeleteSection,%Tar%,Settings_Default_SE
+IniDeleteSection,%Tar%,Settings_Default_Gena
+IniDeleteSection,%Tar%,Settings_Default_Yomi
+IniDeleteSection,%Tar%,Settings_Default_Win10PESE
+IniDeleteSection,%Tar%,Settings_Default_Win8.1SE
+IniDeleteSection,%Tar%,Settings_Default_Win8PESE
+IniDeleteSection,%Tar%,Settings_Default_Win7PESE
+IniDeleteSection,%Tar%,CompareEditXXX
+IniDeleteSection,%Tar%,EncodedFile-InterfaceEncoded-AmperossQetto2Move0016016.bmp
+//--
+//Extra-Start
+//--
+IniDelete,%Tar%,Interface,Info_Cmd_TextLabel
+IniDelete,%Tar%,Interface,Info_CDR_TextLabel
+IniDelete,%Tar%,Interface,Info_MGo_TextLabel
+IniDelete,%Tar%,Interface,Remove_Bevel
+IniDelete,%Tar%,Interface,Remove_Label
+IniDelete,%Tar%,Interface,Plus_Button
+IniDelete,%Tar%,Interface,Minus_Button
+IniDelete,%Tar%,Interface,RemoveAll_Button
+IniDelete,%Tar%,Interface,RemoveLink_Button
+IniDeleteSection,%Tar%,PlusGui
+IniDeleteSection,%Tar%,MinusGui
+IniDeleteSection,%Tar%,RemoveAll_Process
+IniDeleteSection,%Tar%,RemoveLink_Process
+IniDeleteSection,%Tar%,Test
+IniDeleteSection,%Tar%,Test2
+//--
+IniWrite,%Tar%,Interface,Edit_Button,Edit#$c1#$c8#$c7#$c2#$c30#$c25#$cEdit_Process#$c#$cFalse#$c_Edit_Process_#$cFalse
+IniWrite,%Tar%,Interface,Edit_TextFile,Steps.txt#$c1#$c6#$c7#$c30#$c508#$c284
+IniWrite,%Tar%,Interface,NirCMD_CheckBox,#$qAdd#$snircmd.exe#$q#$c1#$c3#$c174#$c-2#$c102#$c18#$cTrue
+//--
+//Extra-Finish
+//--
+IniRead,%Tar%,Main,Version,%tVer%
+Set,%tVerP%,%tVer%
+StrFormat,INC,%tVerP%,1
+If,%t%,Bigger,1,Loop,%ScriptFile%,Dub_Personal_HistoryDelete_Loop,2,%tVerP%
+If,%t%,Bigger,1,Loop,%ScriptFile%,Dub_Personal_HistoryNotesDelete_Loop,1,%tVer%
+IniWrite,%Tar%,Main,History%tVer%,"%Auth% %MyDate% Plugin created"
+End
+//-
+Call,LinkType,,%ScriptFile%,%ProjectDir%
+Echo,%LinkType%,Warn
+//PluginFile LinkFile
+If,%LinkType%,Equal,LinkFile,Begin
+StrFormat,Split,%ScriptDir%,\,1,%t%
+If,%t%,Equal,Projects,Begin
+StrFormat,Split,%ProjectDir%,\,0,%ProjectDirNo%
+StrFormat,Split,%ProjectDir%,\,%ProjectDirNo%,%ProjectFolderName%
+//-
+StrFormat,Split,%ScriptDir%,\,2,%t%
+StrFormat,Replace,%ScriptDir%,\%t%,\%ProjectFolderName%,%LinkDir%
+//-
+If,ExistFile,%Tar%,Begin
+If,Not,ExistFile,%LinkDir%\%NFNWOext%.Link,Set,%rf%,1
+Call,CreateLink,%Tar%,%LinkDir%,%NFNWOext%.Link
+End
+//Better keep a link at ScriptDir
+If,ExistFile,%Tar%,Call,CreateLink,%Tar%,%ScriptDir%,%NFNWOext%.Link
+End
+//not a regular link file - fallback: create default link
+If,ExistFile,%Tar%,Call,CreateLink,%Tar%,%ScriptDir%,%NFNWOext%.Link
+End
+Else,Begin
+If,ExistFile,%Tar%,Call,CreateLink,%Tar%,%ScriptDir%,%NFNWOext%.Link
+End
+//-To easily Manually Copy Link files when required save a copy side by side with plugin
+If,ExistFile,%Tar%,Call,CreateLink,%Tar%,%TarFolder%,%NFNWOext%.Link
+//-
+If,%rf%,Equal,1,System,ReScanScripts
+
+[Dub_Personal_HistoryDelete_Loop]
+Set,%t%,#c
+If,#c,Smaller,1000,Set,%t%,#c
+If,#c,Smaller,100,Set,%t%,0#c
+If,#c,Smaller,10,Set,%t%,00#c
+IniDelete,%Tar%,Main,History%t%
+IniDelete,%Tar%,Main,History%t%a
+IniDelete,%Tar%,Main,History%t%b
+IniDelete,%Tar%,Main,History%t%c
+IniDelete,%Tar%,Main,History%t%d
+IniDelete,%Tar%,Main,History%t%e
+IniDelete,%Tar%,Main,History%t%f
+IniDelete,%Tar%,Main,History%t%g
+IniDelete,%Tar%,Main,History%t%h
+
+[Dub_Personal_HistoryNotesDelete_Loop]
+Set,%t%,#c
+If,#c,Smaller,100,Set,%t%,#c
+If,#c,Smaller,10,Set,%t%,0#c
+If,%t%,Bigger,1,Begin
+IniDelete,%Tar%,Main,HistoryNotes%t%
+IniDelete,%Tar%,Main,HistoryNotes%t%a
+IniDelete,%Tar%,Main,HistoryNotes%t%b
+IniDelete,%Tar%,Main,HistoryNotes%t%c
+IniDelete,%Tar%,Main,HistoryNotes%t%d
+IniDelete,%Tar%,Main,HistoryNotes%t%e
+IniDelete,%Tar%,Main,HistoryNotes%t%f
+IniDelete,%Tar%,Main,HistoryNotes%t%g
+IniDelete,%Tar%,Main,HistoryNotes%t%h
+End
+If,%t%,Equal,1,IniWrite,%Tar%,Main,HistoryNotes01,""
+
+[Variables]
+%ProgramTitle%=PortableFinder
+%ProgramEXE%=PortableFinder.cmd
+%ProgramFolder%=System32
+%rall%=0
+%PE_Programs%=#$pSystemRoot#$p
+
+[Process]
+If,Not,ExistFile,%Target_Sys%\BroadcastEnvChange.exe,Require,File,BroadcastEnvChange.exe
+If,%HideCMD_CheckBox%,Equal,True,Begin
+If,Not,ExistFile,%Target_Sys%\HideRun.exe,Require,File,HideRun.exe
+End
+//--
+If,%NirCMD_CheckBox%,Equal,True,Require,File,nircmd.exe
+//--
+IniRead,%ScriptFile%,Main,Title,%t%
+Set,%ProgramTitle%,%t%
+Set,%ProgramEXE%,%t%.cmd
+//--
+If,ExistDir,%ProjectTemp%\PortableFinder,Call,DirDelete,%ProjectTemp%\PortableFinder
+DirMake,%ProjectTemp%\PortableFinder
+ExtractFile,%ScriptFile%,InterfaceEncoded,Steps.txt,%ProjectTemp%\PortableFinder
+CopyOrExpand,%ProjectTemp%\PortableFinder\Steps.txt,%Target_Sys%\%ProgramEXE%
+//--
+//Dependencies
+//Set,%PluginArch%,x86
+Require,File,Reg.exe
+//--
+//Registry
+//--
+If,Not,%HideCMD_CheckBox%,Equal,True,Begin
+Add_Shortcut,AutoRun,,,%ProgramTitle%,#$q#$pSystemRoot#$p\system32#$q
+End
+Else,Begin
+Add_Shortcut,AutoRun,,#$pSystemRoot#$p\system32\hiderun.exe,%ProgramTitle%,#$q#$pSystemRoot#$p\system32#$q,"/w #$q#$pSystemRoot#$p\system32\%ProgramEXE%#$q"
+End
+//--
+//Run,%ScriptFile%,Test
+
+[Test]
+//-For Tests--------------------
+Add_Shortcut,Desktop
+FileCreateBlank,%TargetDir%\Test.cmd
+TxtAddLine,%TargetDir%\Test.cmd,"Echo #$pLaddsDVD#$p",Append
+TxtAddLine,%TargetDir%\Test.cmd,"pause",Append
+//--
+//Following info To make Test on Cd (remind: no need such thing on cd ;) but test is test :>)
+//Gena:
+//Wimboot/BootDI -> Put laddsbootdvd.tag with 'RootCD' option and not empty laddsbootdvd.tag ;) (write something inside laddsbootdvd.tag )
+//this is only valid with create iso (and always result with x: ;) ) FileCreateBlank,%TargetDir%\laddsbootdvd.tag
+//Win7PESE
+//this will work as expected with dvd test FileCreateBlank,%TargetDir%\laddsbootdvd.tag
+//--
+//RegHiveLoad,Tmp_Default,%RegDefault%
+//RegWrite,HKLM,0x2,Tmp_Default\Software\Microsoft\Windows\CurrentVersion\RunOnce,PortableFinder,"hiderun.exe /w cmd.exe /c %ProgramEXE%"
+//RegWrite,HKLM,0x2,Tmp_Default\Software\Microsoft\Windows\CurrentVersion\RunOnce,PortableFinder,"cmd.exe /c %ProgramEXE%"
+//RegHiveUnLoad,Tmp_Default
+//--
+//-For Tests--------------------
+
+[Test2]
+Echo test
+Echo %Temp%
+Echo test>%Temp%\PortableFinderCMD.txt
+Explorer.exe /n,/e,%Temp%
+pause
+cmd
+
+[Edit_Process]
+If,Not,ExistDir,%ProjectTemp%,DirMake,%ProjectTemp%
+If,ExistFile,%ProjectTemp%\Steps.txt,FileDelete,%ProjectTemp%\Steps.txt
+If,ExistFile,%ProjectTemp%\Steps.txt,Halt,"Steps.txt Not Deleted"
+ExtractFile,%ScriptFile%,InterfaceEncoded,Steps.txt,%ProjectTemp%
+Echo,"Close Editor. Waiting......."
+System,FILEREDIRECT,OFF
+ShellExecute,Hide,cmd.exe,"/C #$q%ProjectTemp%\Steps.txt#$q",%ProjectTemp%
+System,FILEREDIRECT,ON
+Encode,%ScriptFile%,InterfaceEncoded,%ProjectTemp%\Steps.txt
+System,RefreshInterface
+
+[AuthorEncoded]
+media-flash-usbpendrive-3.ico=1468,1958
+Logo=media-flash-usbpendrive-3.ico
+
+[InterfaceEncoded]
+Steps.txt=885,1180
+DoubleJDesignRavenna3dArrowDown0016016.bmp=622,830
+BokehliciaCaptivaSoftwareupload0016016.bmp=676,902
+AmperossQetto2Move0016016.bmp=893,1191
+
+[EncodedFolders]
+Backup
+Folder
+InterfaceEncoded
+
+[Folder]
+
+[EncodedFile-AuthorEncoded-media-flash-usbpendrive-3.ico]
+lines=0
+0=eJztlHtMU2cYxr+2XOZwCixsuOjmlqFiiGi2xDm5FTYsENAJrmLBohlkZLCJOpyIiChoOtFNiiEh6qL+4UhFRxBFAyKKXCSIgDdAA2jEAKalUHo77bP3VOdI3IjKlv0xvuaXk37n5DzPed/n/RgT0G/mTGZbx50Ze4uucwh+K4AQsKc3ndlzC8AEE/zvGbUExIyn42M3au81QvT8BL36+iv9gLlzv/jcy6vETijcTX+DhQKBm7uLy3xHe/uYp+P8NiH8N/TdJk9+Pzchob3p/HlkxsdrPadNq5gyaVJOekhI26bAwH6v6dMrRCJRFj36GTFtvD5G6zvY2bGv/PwOlx87BqPRiPZbt7AvPd2SIBYPFcXHo3r9evy2Mhrf+/mpyVelQCDYSq8IZE+OO8F49cO9vb9UbtpkGhgYAGcyofPOHdy8cQNHFQrcKj4JvcGAzgsXUJ+zC6poGVJ9fdWe7u6V7IkPP8JlPPq74uLqmpubwS/98DDaWlrx+FEv2k8UQ08+YLHY7hmoNj2NjWjMzUVx7GokLlzYN93ZuZRe9x3xMeH0KvoFycmVHU1NVq1Wi2vXr2PEoMfdc+fQV3MFuH0b6O8HBgfJgMHmgyM/fVSja8p8FMetRez8BQ/fdHpdRa9NIDwJ+5fR3y+XT8mVyVYdy8i42lRZgT7q/8DpMnBXr4K7cgXWe/eAR4+Ax48B8gi93ubDxHHoJx9N+37GUekqi8RjVgfNTh69PpRwe1H9vDVr2I/R0WxbWKj7kXXrGrQnqOdFRTCXlMBaVQUzT309zG1tsNy/D2g0gE73rB4msxm9dfVozNqJLf7+wx+4uFaRRCrhxf48R8bU3yOTsZ0rVtgfTEoqVeflAVR/tLcDly8DFy/CQhgrKjBcXo5h8qNvbYWV78vIyLN86LRDuFukgkoWg7APPbpFQqGSpCTE1LH0laTPe8hfu5blxsYuLJTLa66npcHEeyANY0sLuEuXgJoaWKkfRvKiPX0aah56Zoj6ZHrwADS84J30UWYv/pCGZO/5WjcnpzKSkxPuY+nz5BP7Vq9mCpnMIUcq3VAUF9d9/9AhmDo7oSP0DQ3P6gHStJIvI+1pzp6Fhuqira3FyM2b4MizjmjOPwCFfwA329W1niSTiXdfRH9vbCzLWbmS7YiKeid32bLDF1JTTYP03abeXozQPHC8jzNnADorQfPI94kjXR15G6qrg4nyah3U2GrRTlnaHyDGHFeXJpL99o86jKkfE8N2kf5uqZRlRUayjPDwT5SRkao6hcKs488Jfhb5uSwuBk6etPVFTXlt3bgR3QUFwMOHAHmFWm3LRRfl5if/AMxydm4gaRkx+UX1d0ZFsR3Ll7OtERF2GcHBEYVSae01pdJi4PX5nvP9IA8ceRmk89tcXQ1QNm3Z7ep6MreUz45Tp5C6YAH3hr39L6Q/52X0s0h/+9KlbFtEBNsqkQi3BAWFFERFVdRmZ49o+CzQXNp8UA5QWgrQ94L6AMqHrU49PbZ5rc7Oxkcutj4sehX9zPBwtj0sjGWGhrLNwcEOaWLxp4rQ0CPlKSnaB5RTK++FnxM+F5RH0JyCzg3QmYrubhipLmEeHi2k7z0u/ZAQliGRsC1LlrD1YjFL8vWdTV7SD0mlVZc2b1b3FBZCp1IBZWVAZSVA2eV70kEZWTRjxgHSn/JP6KeTfmpQEEsJDGQb6Pq1j49Dio+P94bFi7/ZIZEcLIyJaTuemDjwa1KS+oBc3hk9b96eSSLRc/mfYIIJ/hP+dhkJjSMd4SKCnqxi/sRUaJgIBiYg2DaO0SZj7yGTbnQxR9oUwUogk9AQVsexNH4HClmdQ3ick81NTclM1E3LSSzO0C0tTipIzUspyixL1TXWy0zOZxgFwxzsE4DQ8azY5feUf3zBwAQAJcMPNm0IIgEBAAAAAgAAADkAAABfBQAAAAAAAAEAAAAAAAAAAAAAAA
+
+[EncodedFile-Backup-Steps.txt]
+lines=0
+0=eJxdUduKwjAUfC/0Hwahoi+W3UfBBbWturo3b7srwhJN2gayCaSxq39vEvDCvuRhMnNm5px0XypkSgj1x2WBihG9L5ErDUEorXZKGVrTjiEFci4YlATVvGZVGKROCiKpVRlEM8dP1kmEVNZcK/nLpCECa6I52QkWBmGwsMQlKdyk3va/gSNk1jiKJuASrSESpMgwwhgTPGOKGV7wije84wNzLLDECmt84gvf2KCPQRtUoUW5H9Ld4uFJHgQe/dtsgueIOdiRV8YTIpsls1ki3+BSoOe+2i6Nb3gr5qBun1JX8NIKS4U5K+xEfQoDzYoOOzJYBRrj6XC1vdtFA3F9NUFsME9HP4sNYpvK0m8+DWsz0IrQPbFB78zC4ApbdFgSWTDvF+8uuJUmCid10C4EN1zJCiQ3TMOUvILg0l/CLsGcAaHFnOh4nOMMLkktKNYrqShhGAUjEPxhhNBujNjlt+ztDmJgAgD/oQc7l6S1/wEAAAACAAAAJQAAAEYBAAAAAAAAAQAAAAAAAAAAAAAA
+
+[Backup]
+Steps.txt=399,532
+
+[DownloadXXX]
+Call,DownloadXQ
+
+[UploadXXX]
+Call,UploadXMultiQ,,%ProjectDir%\Utils\WebRoots_SE_Gena.Script||WebRoot
+
+[Settings_Default]
+IniWrite,%ScriptFile%,Main,Selected,False
+
+[Settings_Default_Yomi]
+IniWrite,%ScriptFile%,Main,Selected,False
+
+[EncodedFile-InterfaceEncoded-DoubleJDesignRavenna3dArrowDown0016016.bmp]
+lines=0
+0=eJzNk09Ik2Ecxw06BF2KqG5ih1EgYZZu7+v7vnu3d++2MpelRFHgQZEaJLVIXSxrW4Wauf7Nwha2rQ7dOgT9IQT1EkQHi+hSHfRSUZrMcp389PjSoUib3vrB9/I8fD78fr+Hxwi0LS+yyi6ySWSVyGqRZUUl1rnr1/3vBfy3+TTxkabuAzx4dp+lsu/G31LRXIrjaCmeVjtfpj4v2jH+YQwpWIYc3orctgUptJkT/UcWxc/1rLXYqYpKqGcklEglcns5DuF48uLhPx2TUxOYIRWlU8PZraOdU1GjMsop4RO9+DucfM1NzuvIfctR3Wai9hq4rvrREybOCy608xpqrAqlQzhObiOSbv2Ln8nPsDvsZ33dSoob1mE7XIIsetAvCUePG63TiRpXUE47rJ0MvRz8wzH9fZqR0SHSj1LUhn2s8a6gMi7hTm7HddmLftHA2aVT2mJjY3Mx7naJ/I/8vHN0Zc5avKNLw+gP4O7bgeuKD73XQyDqI5QM8ur96IJ7jKUiFi8nDDwDezBuCsf1amsnA4Opgm8Y7jtu8UrSj3lnL+btOjypXRg3dpIdThfkjyWCFu9M1eC7tx/vXeFIC8etWjKL4IPdTRZfFqtAvua1PJ5sPWamnuxIpiD/9Plj4ukIh3oaqGk3KG+0sWHfWhp7DvJm7PWS/9FcZmdnF+R+AlbU23p4nNNyyS9Nykn1ckktzkzPC0osS83LSzROcSwqyi93yS/PMzAwNAMivaTcAoZRMPxAGQuEZmPCLu9y8YwcAxMAHjMRfb+2diEBAAAAAgAAAEQAAAAGAgAAAAAAAAEAAAAAAAAAAAAAAA
+
+[EncodedFile-InterfaceEncoded-BokehliciaCaptivaSoftwareupload0016016.bmp]
+lines=0
+0=eJytU21LWmEYbrAfsP0De4H2pRcqRq+0RllUZkav1O+YIH2JPvUhKKJfUE3aaCNQQR3pYWDTPCpBMKUxSczjZDB0Q8UPV/d9L0tdg33YAxfn5nq5n+c85z4vDa8e18l6TnhGeEJ4SnhUpxP+xa1euQD8V5RKJeTzeeRyOWSzWQHXzLH2t1yxWEQikYDb7cXu7iHW1/exuron4Jo51tjD3tqsw3GC+fn36O39hJ6eh8Eae9hb2SMYjGB42Iu+Pv8/gb2cKb+v2fwGAwOBGvhpTzfhg9S1utn8FuW7MplOMDQUwMhIgHrfY3Mzio2Nz1Uce9jLGc5mMhni/WhuPoROt4/6+td3ODpKwGqNV3HsYS9nOBuLfUFLyzG6ulzEnVXB4/kOpzPzB89eznD24iKKxkar9NPrg7fwYG7OBp/vGxRFw+ysDaOjnjudvZzhbDR6iY4OO/V0YHJSxdiYiq2trygUSri+zuLq6ofU29tx0djT2WmTDGdTqbRw3d1O+jYfMTGhYno6TL1zKC+uTaawaDrdHtrajiWjaWn5BgsLfhgMIZoPL6amQlKvrJzT/gUkkwUsL58Lx2hoOJAnZ8rzbLF4YTSG6d18dAY3nfMUg4MK7RmULGu/oUqea4tFqZi/JGZmwnJGgyEg8zU+fip3otcrdJcRusMQ2tt5vl3iVdVU1T9gt6exuMi+exiNZ2htfYempgNBf78LS0sRsPehf1DTfoq2sxPH2tolnTEm4Jo51tLpX1XZG70Y6I54nNNyys9OzcjJTM5MdE4sKMksSwzOTyspTyxKLS3IyU9MMTAwNAMivaTcAoZRMPxAGQuEtmHCLs9kcFmVgQkAJ9URXc7wHxQBAAAAAgAAAEQAAAA8AgAAAAAAAAEAAAAAAAAAAAAAAA
+
+[CompareEditXXX]
+Call,CompareEdit
+
+[EncodedFile-InterfaceEncoded-AmperossQetto2Move0016016.bmp]
+lines=0
+0=eJxtk1lIVFEYxw16agEVzTRncRtt0cx0NCu0QlsgyyCih7Cgh6KFNgQzSsqnFohUEm3FlqmsVGxxxoxSyYkpTcctsiKXtCZ1mPXee878++5o4YMf/DjfnXN+//sdmLt2s3amj7e0RAzhO8kMH7XPv/KfPcF0NXd7RXRg3ufCoDMD+nkFQ8Z5BYOTDBmDCgYNgXlfCudsq4yZzg3I7ToSfMHmVJQBilLi6pT1X097IZdsroBc87GpblB+zwHVNUBJ50JLBAQUSVhQIkJB/X+KBYQWCd4s1XUgKL/3kOz6HTYpQ4scbq9fLsL/ooAV50ahueKE8oYI1TWBoLVcgLKMKJWf6T1XHILv8WaVothyMlwHqG+KmHVJxKHbFnjs49j5zAnf2xyqexLC74hewm6JdE6AmjLDH1BGseVU2E17VeRjIIBmPFhhASQnnneK0Fy2IYaIKHEi9C6DXxmDWscQeY+yKkREPpLfaa+JuO/Wh5C/9bEd4C7INWyxw/bbCmnUiuZeK9bpHDhfY0FkuQvKSo6ohxKiqoCIu+76qEp3XUQtkFDL0DYm2x4863bjdAdwthfY0QKsMYjgYNDTAQVlqJ9yLHwBaB66DdFPhbol9TRLDUPsS4bWMQ+sYw6kVjuwhmbaXzuOvTVWVJtpPkqpbx/DYp0b0a+AmGrBsKhWMMS+AWL1dDcipZGhctiDHSYRbRY3OSIhYdwlYaI4cppdCGsAFr8Q6uNeiU/iacalrxkSyI1ropxGCXEtDGs/cmxq50hrlvCkx+G9W/F3DzQNDLITpxerEhrFE0ntwLK3DInvGLTvGZI/0BytHInka0wce9tpDo+E0gEPwuncUkJ2ljeJuUlGzNcamS3pA8iVkEJO6ieOVR2EmXpaN3Zz7PviQbyJPMrXfgSSjcy+2mQPlv+DaR3CrrSvQGon0caxmry0Lo508tJ7KIf6BLqHvLeyC0j/RpiFnKnfQEa3sDujj1syR4CMn0AmsZ76DSMTvfe3X8C6Pv4n0yzsme4bzO6yB2f1s6NZ/VyX9YPVZU+yhcjqlx5kD9FetyNkqvMXP3mcf3ick3XMLUgtyi8uDkwtKck38s0vSzUwMDQDIr2k3AKGUTDMgRkLhFZixi4vra37hIEJABkJC8Gkai7oAQAAAAIAAAA3AAAAIgMAAAAAAAABAAAAAAAAAAAAAAA
+
+[EncodedFile-InterfaceEncoded-Steps.txt]
+lines=0
+0=eJydVF1v4kgQfEfiP5Ss9W5yWkGOe0NKpARDNrd8JHzkblfWocHT4Ll1ZrjxmISX/e3XY3Age+zLGQmN2z1V1dU9001Sg57JMvOs9Ao5CZukWBqLTEiZL4xxciMbTqwwspimNNqQnk+csK5YN5IniaXKCEZDWrWhvF7rekQILRnMIex7mOgxCtHVG2WNfiLtRIZHYZVYZFSv1WsTTpyKlUe6jH/krdfa7TcJJ0R4kESiKRF+l+sL/9puPwvl0LpgGYnRMoczWBDywhJElu31glwCS0Ju6zWtLGM16IWw38uPx+qxHWF4B6Vx1kGELnq4xSfc4Xd8Rh8DDDHCPR4wxgRTzPCIP/AnvuArrnFzDmlwJlUJ0o7x65UuMrTK//fvoZZoKtCLyl2ZEHKlPa40LA2s/Lv0n869mtLgg69lsddSen8rUzE1GNOKES3XZWlVFsU7EHz63JnFR60I0Ny8kqDpMO7ezidf0Vx6O4MDT8A0N9YImQgWekRWr72GOdpJhV5RyddcVPGdQuWU0Wz9FrdcWCeKfAewqTSbJe6t+ZsSh+dU8RQmQvuOWfqnUJakH7KFcEnKDRmN0ewhcOYb6fyy9UvAzl3jboizD6wfD7Pu+IuvtT+IJ9vc0VPcKazlcjtGO2syHqh4v4wnlOcsDAOhxYrsf8yphLb+uhrO+h/OEY0w6U6rODfmhuuLDLamsN7kss4cYunIwqUqR6Y0gZ/uC46GLE+NdUnhjl2OB9vr9TpTifAg8SJja4TPDhB8f7c0mSTbkJR/c2b9jmNv0gM/C7tfm59Tp7Vc+8+74/JDf9vlbL1Ow/GQ7b9VZoT7RbijqkpqJsid4tOVKilJ41m51K/JFrpkPeQdF31C6UFO11pj+7ShDOFhXRLfLd+EMOw+4ALlrhOQ8+FoOu+NZsPoKpzS0/rAG221eFLJvMRquBf3cwN7Sqs8rSyOaFGsDqbumCl3FcE9d9gPd2cQ+XCDN/u800Owm9QxX31hnJfr31rxPu8n7Wfcki84oIK3Wlpa8ir56vTaEAR8wawzY3l76b/+2KSPO5H/v+9rUeR0bMTBHL7O3L+myQbNeJzjDC5JLSjWK6koYRgFIxDEsEFoXWbs8nVLvRgYmADiMAWo46y2zgEAAAACAAAAJAAAAC0DAAAAAAAAAQAAAAAAAAAAAAAA
+
